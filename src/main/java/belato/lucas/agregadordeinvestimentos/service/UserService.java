@@ -52,20 +52,16 @@ public class UserService {
     public void UpdateUserById(String userId, UpdateUsetDto updateUsetDto) {
         var id = UUID.fromString(userId);
         var userEntity = userRepository.findById(id);
-        System.out.println(userEntity);
         if (userEntity.isPresent()) {
             var user = userEntity.get();
             System.out.println(user.getUsername());
             if (updateUsetDto.username() != null) {
                 user.setUsername(updateUsetDto.username());
             }
-            System.out.println(user.getUsername());
 
-            System.out.println(user.getPassword());
             if (updateUsetDto.password() != null) {
                 user.setPassword(updateUsetDto.password());
             }
-            System.out.println(user.getPassword());
 
             userRepository.save(user);
         }
