@@ -1,8 +1,8 @@
 package belato.lucas.agregadordeinvestimentos.service;
 
 import belato.lucas.agregadordeinvestimentos.Repository.UserRepository;
-import belato.lucas.agregadordeinvestimentos.controller.CreateUserDto;
-import belato.lucas.agregadordeinvestimentos.controller.UpdateUsetDto;
+import belato.lucas.agregadordeinvestimentos.controller.Dto.CreateUserDto;
+import belato.lucas.agregadordeinvestimentos.controller.Dto.UpdateUserDto;
 import belato.lucas.agregadordeinvestimentos.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +49,7 @@ public class UserService {
         }
     }
 
-    public void UpdateUserById(String userId, UpdateUsetDto updateUsetDto) {
+    public void updateUserById(String userId, UpdateUserDto updateUsetDto) {
         var id = UUID.fromString(userId);
         var userEntity = userRepository.findById(id);
         if (userEntity.isPresent()) {

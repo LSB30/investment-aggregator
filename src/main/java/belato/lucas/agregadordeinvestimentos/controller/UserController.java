@@ -1,5 +1,7 @@
 package belato.lucas.agregadordeinvestimentos.controller;
 
+import belato.lucas.agregadordeinvestimentos.controller.Dto.CreateUserDto;
+import belato.lucas.agregadordeinvestimentos.controller.Dto.UpdateUserDto;
 import belato.lucas.agregadordeinvestimentos.entity.User;
 import belato.lucas.agregadordeinvestimentos.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +48,8 @@ public class UserController {
 
 
     @PutMapping("{userId}")
-    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,@RequestBody UpdateUsetDto updateUsetDto) {
-        userService.UpdateUserById(userId, updateUsetDto);
+    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,@RequestBody UpdateUserDto updateUsetDto) {
+        userService.updateUserById(userId, updateUsetDto);
 
         return ResponseEntity.noContent().build();
     }

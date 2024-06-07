@@ -11,6 +11,9 @@ public class Account {
     @Column(name = "account_id")
     private UUID accountId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column(name = "description")
     private String description;
 
