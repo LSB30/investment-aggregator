@@ -2,6 +2,7 @@ package belato.lucas.agregadordeinvestimentos.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "tb_accounts")
@@ -20,6 +21,9 @@ public class Account {
     private BillingAddress billingAddress;
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountStock>accountStockList;
 
     public Account() {
 
