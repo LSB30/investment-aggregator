@@ -1,5 +1,7 @@
 package belato.lucas.agregadordeinvestimentos.controller;
 
+import belato.lucas.agregadordeinvestimentos.controller.Dto.AccountResponseDto;
+import belato.lucas.agregadordeinvestimentos.controller.Dto.CreateAccountDto;
 import belato.lucas.agregadordeinvestimentos.controller.Dto.CreateUserDto;
 import belato.lucas.agregadordeinvestimentos.controller.Dto.UpdateUserDto;
 import belato.lucas.agregadordeinvestimentos.entity.User;
@@ -60,4 +62,22 @@ public class UserController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<Void>createAccount(@PathVariable("userId") String userId, CreateAccountDto createAccountDto ) {
+
+        userService.createAccount(userId,createAccountDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{userId}/accounts")
+    public ResponseEntity<List<AccountResponseDto>>listAccounts(@PathVariable("userId") String userId ) {
+
+        var accounts = userService.listAccounts(userId);
+
+        return ResponseEntity.ok(accounts);
+    }
+
+
 }
