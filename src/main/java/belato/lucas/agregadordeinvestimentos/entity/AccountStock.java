@@ -3,11 +3,11 @@ package belato.lucas.agregadordeinvestimentos.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_accounts_stocks")
+@Table(name = "tb_accountstocks")
 public class AccountStock {
 
     @EmbeddedId
-    private AccountStockId id;
+    private AccountStockId accountStockId;
 
     @ManyToOne
     @MapsId("accountId")
@@ -24,19 +24,19 @@ public class AccountStock {
 
     public AccountStock(){}
 
-    public AccountStock(AccountStockId id, Account account, Stock stock, Integer quantity) {
-        this.id = id;
+    public AccountStock(AccountStockId accountStockId, Account account, Stock stock, Integer quantity) {
+        this.accountStockId = accountStockId;
         this.account = account;
         this.stock = stock;
         this.quantity = quantity;
     }
 
     public AccountStockId getId() {
-        return id;
+        return accountStockId;
     }
 
     public void setId(AccountStockId id) {
-        this.id = id;
+        this.accountStockId = id;
     }
 
     public Account getAccount() {

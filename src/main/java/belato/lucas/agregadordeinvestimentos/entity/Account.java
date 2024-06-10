@@ -2,6 +2,7 @@ package belato.lucas.agregadordeinvestimentos.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -23,7 +24,7 @@ public class Account {
     private String description;
 
     @OneToMany(mappedBy = "account")
-    private List<AccountStock>accountStockList;
+    private List<AccountStock> accountStocks = new ArrayList<>();
 
     public Account() {
 
@@ -56,5 +57,13 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<AccountStock> getAccountStocks() {
+        return accountStocks;
+    }
+
+    public void setAccountStocks(List<AccountStock> accountStocks) {
+        this.accountStocks = accountStocks;
     }
 }
