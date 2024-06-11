@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class Stock {
     @Id
     @Column(name = "stock_id")
-    private String stockId; // PETR4, MGLU4
+    private String stockId;
     @Column(name = "description")
     private String description;
 
