@@ -1,5 +1,6 @@
 package belato.lucas.agregadordeinvestimentos.controller;
 
+import belato.lucas.agregadordeinvestimentos.controller.Dto.AccountStockResponseDto;
 import belato.lucas.agregadordeinvestimentos.controller.Dto.AssociateAccountStockDto;
 import belato.lucas.agregadordeinvestimentos.entity.Stock;
 import belato.lucas.agregadordeinvestimentos.entity.User;
@@ -27,9 +28,9 @@ public class AccountController {
 
 
     @GetMapping("{accountId}/stocks")
-    public ResponseEntity<List<Stock>> listStocks(@PathVariable("accountId") String accountId) {
+    public ResponseEntity<List<AccountStockResponseDto>> listStocks(@PathVariable("accountId") String accountId) {
         var stocks = accountService.listStocks(accountId);
 
-        return ResponseEntity.ok().body(stocks);
+        return ResponseEntity.ok(stocks);
     }
 }

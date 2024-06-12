@@ -77,4 +77,6 @@ public class Account {
     public void setAccountStocks(List<AccountStock> accountStocks) {
         this.accountStocks = accountStocks;
     }
+
+
 }

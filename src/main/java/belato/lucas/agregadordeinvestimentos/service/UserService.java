@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class UserService {
 
@@ -42,7 +44,6 @@ public class UserService {
     }
 
     public Optional<User> getUserById(String userId) {
-
         return userRepository.findById(UUID.fromString(userId));
     }
 
@@ -60,18 +61,18 @@ public class UserService {
         }
     }
 
-    public void updateUserById(String userId, UpdateUserDto updateUsetDto) {
+    public void updateUserById(String userId, UpdateUserDto updateUserDto) {
         var id = UUID.fromString(userId);
         var userEntity = userRepository.findById(id);
         if (userEntity.isPresent()) {
             var user = userEntity.get();
             System.out.println(user.getUsername());
-            if (updateUsetDto.username() != null) {
-                user.setUsername(updateUsetDto.username());
+            if (updateUserDto.username() != null) {
+                user.setUsername(updateUserDto.username());
             }
 
-            if (updateUsetDto.password() != null) {
-                user.setPassword(updateUsetDto.password());
+            if (updateUserDto.password() != null) {
+                user.setPassword(updateUserDto.password());
             }
 
             userRepository.save(user);
@@ -80,34 +81,39 @@ public class UserService {
     }
 
     public void createAccount(String userId, CreateAccountDto createAccountDto) {
-            var user = userRepository.findById(UUID.fromString(userId))
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario nao existe"));
 
-            var account = new Account(
-                    UUID.randomUUID(),
-                    user,
-                    null,
-                    createAccountDto.description(),
-                    new ArrayList<>()
-            );
 
-            var accountCreated = accountRepository.save(account);
+        if (isNull(user.getAccounts())) {
+            user.setAccounts(new ArrayList<>());
+        }
 
-            var billingAddress = new BillingAddress(
-                    accountCreated.getAccountId(),
-                    account,
-                    createAccountDto.street(),
-                    createAccountDto.number()
-            );
+        var account = new Account(
+                UUID.randomUUID(),
+                user,
+                null,
+                createAccountDto.description(),
+                new ArrayList<>()
+        );
 
-            billingAddressRepository.save(billingAddress);
+        var accountCreated = accountRepository.save(account);
+
+        var billingAddress = new BillingAddress(
+                accountCreated.getAccountId(),
+                accountCreated,
+                createAccountDto.street(),
+                createAccountDto.number()
+        );
+
+        billingAddressRepository.save(billingAddress);
     }
 
     public List<AccountResponseDto> listAccounts(String userId) {
         var user = userRepository.findById(UUID.fromString(userId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return   user.getAccounts()
+        return user.getAccounts()
                 .stream()
                 .map(ac -> new AccountResponseDto(ac.getAccountId().toString(), ac.getDescription())).toList();
 

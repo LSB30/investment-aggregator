@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/accounts")
-    public ResponseEntity<Void>createAccount(@PathVariable("userId") String userId, CreateAccountDto createAccountDto ) {
+    public ResponseEntity<Void>createAccount(@PathVariable("userId") String userId, @RequestBody CreateAccountDto createAccountDto ) {
 
         userService.createAccount(userId,createAccountDto);
 
